@@ -3,7 +3,17 @@ library(diffr)
 library(shinyWidgets)
 library(shinycssloaders)
 library(shinyjs)
-version<-"SNC:15392.2.v0.1.2a"
+### this script is templated from another (https://github.com/esteeschwarz/dracorTEI) i.e. still messy with deprecated stuff.
+version<-"SNC:16255.v0.0.2"
+status<-"stuck"
+error<-"cannot mtfrm"
+countries<-read.csv("country_data.csv")
+src.zip<-paste0(Sys.getenv("HKW_TOP"),"/Users/guhl/boxHKW/UNIhkw/21S/DH/local/AVL/2025/textur/dataverse_files/gpt-stories.zip")
+src.doi<-"https://dataverse.no/api/access/datafile/:persistentId?persistentId=doi:10.18710/VM2K4O/GEVNMF"
+
+c.all<-countries$country_name
+print(c.all)
+c.all<-c.all[1:20]
 #css<-readtext("render.css")$text
 # Define UI for application
 fluidPage(
@@ -98,61 +108,61 @@ fluidPage(
       class = "scrollable-sidebar",  # Apply the custom CSS class
       helpText(version),
       h4("CONFIGURATION"),
-      helpText("get transcript file..."),
-      textInput("transcript","transcript from transkribus db","iwanette"),
-      actionButton("submit.doc","fetch transcript"),
-      fileInput("upload_tr","upload local transcript",accept = ".txt",buttonLabel = "browse..."),
+      helpText("get corpus..."),
+      textInput("transcript","corpus from DOI source",src.doi),
+      actionButton("submit.doc","load corpus"),
+      fileInput("upload_tr","upload local corpus zip",accept = ".zip",buttonLabel = "browse..."),
       # pickerInput("copy",label = "copyrighted source?",selected = TRUE,
       #             choices = c(TRUE,FALSE)),
-      fileInput("upload_ezd","upload ezd marked-up transcript",accept = ".txt",buttonLabel = "browse..."),
-      fileInput("upload_repl","upload replacements",accept = ".csv",buttonLabel = "browse..."),
-      helpText("set title and author"),
-      textInput("title","Title",""),
-      textInput("subtitle","SubTitle, if vorhanden",""),
-      textInput("author","Author",""),
-      textInput("cast","castlist declaration:","Personen."),
-      helpText("set body begin and act definitions"),
-      textInput("h1","act header declarations:","Act|Akt|Handlung|.ufzug"),
-      #actionButton("submit.h1","apply act definitions"),
-      textInput("h2","scene header declarations:","Scene|Szene|.uftritt"),
-      actionButton("submit.h","apply act|scene definitions"),
+      # fileInput("upload_ezd","upload ezd marked-up transcript",accept = ".txt",buttonLabel = "browse..."),
+      # fileInput("upload_repl","upload replacements",accept = ".csv",buttonLabel = "browse..."),
+      # helpText("set title and author"),
+      # textInput("title","Title",""),
+      # textInput("subtitle","SubTitle, if vorhanden",""),
+      # textInput("author","Author",""),
+      # textInput("cast","castlist declaration:","Personen."),
+      # helpText("set body begin and act definitions"),
+      # textInput("h1","act header declarations:","Act|Akt|Handlung|.ufzug"),
+      # #actionButton("submit.h1","apply act definitions"),
+      # textInput("h2","scene header declarations:","Scene|Szene|.uftritt"),
+      # actionButton("submit.h","apply act|scene definitions"),
       
       helpText('enter the commonly used expressions that introduce a new act (header level 1) and scene (header level 2), like "Handlung|Akt|Act" or "Scene|Szene". This will be used as regex query for defining the sections.'),
      # helpText('we have found the following acts declarations:'),
       #verbatimTextOutput("acts"),
      # actionButton("sumbit.keep.act","use act definitions"),
-      helpText("declare speaker"),
-     actionButton("guess.sp","guess speakers"),
-      textInput(
-        "speaker",
-        "speaker names:",
-        ""
-      ),
+    #   helpText("declare speaker"),
+    #  actionButton("guess.sp","guess speakers"),
+    #   textInput(
+    #     "speaker",
+    #     "speaker names:",
+    #     ""
+    #   ),
      
-     helpText("Enter speaker names separated by commas, then click the button to process them."),
-     switchInput("rswitch","regex",value = FALSE,"ON","OFF"),
-      actionButton("submit.sp", "Process Names"),
-     actionButton("compare", "compare processed", class = "btn-primary", icon = icon("code-compare")),
-     downloadButton("downloadEZD","downdload ezd-markup text"),
+    #  helpText("Enter speaker names separated by commas, then click the button to process them."),
+    #  switchInput("rswitch","regex",value = FALSE,"ON","OFF"),
+    #   actionButton("submit.sp", "Process Names"),
+    #  actionButton("compare", "compare processed", class = "btn-primary", icon = icon("code-compare")),
+      downloadButton("downloadEZD","downdload ezd-markup text"),
      
       hr(),
      pickerInput(
        "co_select",
        "Select Country:",
-       choices = countries$country_name,
-       options = list(
-         `live-search` = TRUE,
-         `actions-box` = TRUE
-       ),
-            pickerInput(
-       "id_select",
-       "Select Story:",
-       choices = countries$country_name,
+       choices = c.all,
        options = list(
          `live-search` = TRUE,
          `actions-box` = TRUE
        )
-
+     ),
+     pickerInput(
+       "id_select",
+       "Select Story:",
+       choices = 1:10,
+       options = list(
+         `live-search` = TRUE,
+         `actions-box` = TRUE
+       )
      ),
   #  textInput("id.defaults.save","ID to save settings"),
     actionButton("load_btn", "Load from Selected ID", class = "btn-primary"),
