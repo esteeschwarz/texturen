@@ -4,7 +4,7 @@ library(shinyWidgets)
 library(shinycssloaders)
 library(shinyjs)
 ### this script is templated from another (https://github.com/esteeschwarz/dracorTEI) i.e. still messy with deprecated stuff.
-version<-"SNC:16255.v0.0.2"
+version<-"SNC:16255.v0.0.3"
 status<-"stuck"
 error<-"cannot mtfrm"
 countries<-read.csv("country_data.csv")
@@ -13,7 +13,7 @@ src.doi<-"https://dataverse.no/api/access/datafile/:persistentId?persistentId=do
 
 c.all<-countries$country_name
 print(c.all)
-c.all<-c.all[1:20]
+#c.all<-c.all[1:20]
 #css<-readtext("render.css")$text
 # Define UI for application
 fluidPage(
@@ -90,6 +90,8 @@ fluidPage(
         border: 1px solid #ddd;
         border-radius: 4px;
       }
+      #processed{
+      margin: 10%;}
     ')),
   # tags$style(HTML(css)),
   div(
@@ -100,7 +102,7 @@ fluidPage(
     actionButton("back-to-app", "Return to App", class = "btn-primary btn-sm")
   ),
   # Application title
-  titlePanel("dracor TEI refactoring"),
+  titlePanel("gpt stories"),
   
   # Main layout
   sidebarLayout(
@@ -109,9 +111,9 @@ fluidPage(
       helpText(version),
       h4("CONFIGURATION"),
       helpText("get corpus..."),
-      textInput("transcript","corpus from DOI source",src.doi),
+      textInput("z.doi","corpus from DOI source",src.doi),
+      #fileInput("z.local","upload local corpus zip",accept = ".zip",buttonLabel = "browse..."),
       actionButton("submit.doc","load corpus"),
-      fileInput("upload_tr","upload local corpus zip",accept = ".zip",buttonLabel = "browse..."),
       # pickerInput("copy",label = "copyrighted source?",selected = TRUE,
       #             choices = c(TRUE,FALSE)),
       # fileInput("upload_ezd","upload ezd marked-up transcript",accept = ".txt",buttonLabel = "browse..."),
@@ -127,7 +129,7 @@ fluidPage(
       # textInput("h2","scene header declarations:","Scene|Szene|.uftritt"),
       # actionButton("submit.h","apply act|scene definitions"),
       
-      helpText('enter the commonly used expressions that introduce a new act (header level 1) and scene (header level 2), like "Handlung|Akt|Act" or "Scene|Szene". This will be used as regex query for defining the sections.'),
+      helpText('the corpus is fetched from the DOI source preconfigured...'),
      # helpText('we have found the following acts declarations:'),
       #verbatimTextOutput("acts"),
      # actionButton("sumbit.keep.act","use act definitions"),
@@ -143,7 +145,7 @@ fluidPage(
     #  switchInput("rswitch","regex",value = FALSE,"ON","OFF"),
     #   actionButton("submit.sp", "Process Names"),
     #  actionButton("compare", "compare processed", class = "btn-primary", icon = icon("code-compare")),
-      downloadButton("downloadEZD","downdload ezd-markup text"),
+     # downloadButton("downloadEZD","downdload ezd-markup text"),
      
       hr(),
      pickerInput(
@@ -158,24 +160,24 @@ fluidPage(
      pickerInput(
        "id_select",
        "Select Story:",
-       choices = 1:10,
+       choices = 1:50,
        options = list(
          `live-search` = TRUE,
          `actions-box` = TRUE
        )
      ),
   #  textInput("id.defaults.save","ID to save settings"),
-    actionButton("load_btn", "Load from Selected ID", class = "btn-primary"),
+    actionButton("load_co", "Load selected country", class = "btn-primary"),
+
+    actionButton("load_id", "Load selected title", class = "btn-primary"),
     # actionButton("save_btn", "Save to Selected ID", class = "btn-primary"),
     # actionButton("new_btn", "Create New ID", class = "btn-success"),
    # actionButton("defaults.save","save settings"),
   #  textInput("id.defaults.load","load settings from ID"),
    # actionButton("defaults.load","load settings"),
-    hr(),
-    actionButton("submit.xml", "create XML"),
-    downloadButton("downloadXML","downdload .xml"),
-    hr(),
-    helpText("if you satisfied with the preprocessed text, start transformation.")
+    #actionButton("submit.xml", "create XML"),
+    #downloadButton("downloadXML","downdload .xml"),
+    helpText("select a country and a text by title from list and switch to <processed> tab.")
   ),
   mainPanel(
    # verbatimTextOutput("proutput"),
@@ -187,32 +189,32 @@ fluidPage(
      #withSpinner(verbatimTextOutput("spinner")),
      withSpinner(uiOutput("pr_progress")
       )),
-      tabPanel("raw",
-               h4("raw text"),
+      # tabPanel("raw",
+      #          h4("raw text"),
                
-               uiOutput("apidoc")),
+              #  uiOutput("apidoc")),
       tabPanel("processed",
               h4("output"),
               
       withSpinner(uiOutput("processed"))
       ),
-      tabPanel("render",h4("rendered xml view"),
-               uiOutput("xmlrendered")
-      ),
-      tabPanel("diff",
-      div(class = "diff-container",
-          h4("diff compare"),
-          withSpinner(diffrOutput("diff_output"))
-      )),
-     tabPanel(
-       "dracor_preview",
-      # h2("External Content Viewer"),
-       #p("Click the button below to view external content in full-screen mode."),
-       actionButton("view-external", "view dracor preview", class = "btn-success"),
-      br(),br(),
-       p("if your processed play is copyrighted and should not be available to download for others, click the flush DB button."),
-       actionButton("flushdb", "flush preview file in DB", class = "btn-success"),
-       verbatimTextOutput("flushnotice")
+    #   tabPanel("render",h4("rendered xml view"),
+    #            uiOutput("xmlrendered")
+    #   ),
+    #   tabPanel("diff",
+    #   div(class = "diff-container",
+    #       h4("diff compare"),
+    #       withSpinner(diffrOutput("diff_output"))
+    #   )),
+    #  tabPanel(
+    #    "dracor_preview",
+    #   # h2("External Content Viewer"),
+    #    #p("Click the button below to view external content in full-screen mode."),
+    #    actionButton("view-external", "view dracor preview", class = "btn-success"),
+    #   br(),br(),
+    #    p("if your processed play is copyrighted and should not be available to download for others, click the flush DB button."),
+    #    actionButton("flushdb", "flush preview file in DB", class = "btn-success"),
+    #    verbatimTextOutput("flushnotice")
       
       # br(), br(),
        # div(
@@ -222,13 +224,13 @@ fluidPage(
        #   h4("Content Preview"),
        #   htmlOutput("framePreview")
        # )
-     ),
+     
       tabPanel("about",
                htmlOutput("md_html")
       ),
-      tabPanel("helper",
-               htmlOutput("nb")
-      )
+      # tabPanel("helper",
+      #          htmlOutput("nb")
+      # )
       
       # tabPanel("render",h4("rendered view"),
       #          uiOutput("xmlrendered")
