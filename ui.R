@@ -11,6 +11,8 @@ countries<-read.csv("country_data.csv")
 src.zip<-paste0(Sys.getenv("HKW_TOP"),"/Users/guhl/boxHKW/UNIhkw/21S/DH/local/AVL/2025/textur/dataverse_files/gpt-stories.zip")
 src.doi<-"https://dataverse.no/api/access/datafile/:persistentId?persistentId=doi:10.18710/VM2K4O/GEVNMF"
 
+
+
 c.all<-countries$country_name
 print(c.all)
 #c.all<-c.all[1:20]
@@ -197,6 +199,15 @@ fluidPage(
               h4("output"),
               
       withSpinner(uiOutput("processed"))
+      ),
+      tabPanel("downloads",
+              h4("available pdf downloads"),
+              actionButton("refresh", "refresh pdfs", class = "btn-primary"),
+              htmlOutput("pdfdiv")
+
+
+              
+    
       ),
     #   tabPanel("render",h4("rendered xml view"),
     #            uiOutput("xmlrendered")

@@ -36,6 +36,20 @@ src.zip<-paste0(Sys.getenv("HKW_TOP"),"/Users/guhl/boxHKW/UNIhkw/21S/DH/local/AV
 src.doi<-"https://dataverse.no/api/access/datafile/:persistentId?persistentId=doi:10.18710/VM2K4O/GEVNMF"
 sbctempdir<-tempdir()
 local<-F
+
+get.pdfs<-function(){
+  fs<-list.files("www",pattern=".pdf",full.names=T)
+  cat("--- new files fetch ---\n")
+  li<-lapply(fs,function(x){
+    print(x)
+    n<-basename(x)
+    d<-paste0('<li><a href="',n,'" target="_blank">',n,"</a></li>")
+  })
+ul<-paste0("<ul>",paste0(unlist(li),collapse="\n"),"</ul>")
+cat(ul)
+div<-paste0("<div>",ul,"</div>")
+}
+
 get.cdirs<-function(cp,local){
   print("--- get.cdirs() ---")
 ### tempfile to store zip
@@ -135,6 +149,7 @@ print(filestrn)
 #   updateTextInput(session, "cast", value = defaults$cast)
 #   
 # })
+pdiv<-get.pdfs()
 # Define server logic
 function(input, output, session) {
   # Reactive values to store intermediate states
@@ -158,9 +173,25 @@ function(input, output, session) {
   # country<-"Germany"
   # selected_id <- 1
   # Update dropdown choices when dataframe changes
-  # observe({
-  #   if (!is.null(rv$cp)) {
-  #   country <- input$co_select
+  observe({
+       output$pdfdiv<-renderUI({
+      pdiv<-get.pdfs()
+      print(pdiv)
+      pdiv<-paste0("<h4>query downloads yet available...</h4>",pdiv)
+      HTML(pdiv)
+       })
+      })
+  observeEvent(input$refresh, {
+     #if (pdiv!="") {
+        output$pdfdiv<-renderUI({
+      pdiv<-get.pdfs()
+      print(pdiv)
+      pdiv<-paste0("<h4>query downloads yet available...</h4>",pdiv)
+      HTML(pdiv)
+    #}
+    })
+  })
+    #   country <- input$co_select
   #   cat("--- selected country: ",country,"\n")
   #   rv$country <- country
   #   #choices <- c("Create new..." = "new", choices)
@@ -769,4 +800,4 @@ div<-c("processing title, open <processed> when finished")
     # })
   })
   
-}
+  }
