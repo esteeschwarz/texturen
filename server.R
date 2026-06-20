@@ -308,7 +308,7 @@ div<-c("processing title, open <processed> when finished")
     })
     output$processed <- renderUI({
     
-    HTML(sprintf('<div><a href="%s">download text as pdf</a>',mdns))
+    HTML(sprintf('<div><a href="%s" target="_blank">download text as pdf</a>',mdns))
     html <- markdown::markdownToHTML(mdp, fragment.only = TRUE)
     HTML(html)
     #  div(

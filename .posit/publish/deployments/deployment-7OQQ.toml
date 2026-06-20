@@ -10,8 +10,8 @@ id = "019ee5c7-bba3-8b94-68df-18a35cf7d20c"
 dashboard_url = "https://connect.posit.cloud/esteeschwarz/content/019ee5c7-bba3-8b94-68df-18a35cf7d20c"
 direct_url = "https://019ee5c7-bba3-8b94-68df-18a35cf7d20c.share.connect.posit.cloud"
 logs_url = "https://connect.posit.cloud/esteeschwarz/content/019ee5c7-bba3-8b94-68df-18a35cf7d20c/history"
-deployed_at = "2026-06-20T18:00:20.938Z"
-bundle_id = "019ee630-a236-c574-b581-5acc5662de06"
+deployed_at = "2026-06-20T18:05:34.895Z"
+bundle_id = "019ee635-76fb-5b80-a8bf-b11efc0f2524"
 files = [
     ".gitignore",
     ".posit/publish/deployments/deployment-7OQQ.toml",

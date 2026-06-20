@@ -131,7 +131,7 @@ fluidPage(
       # textInput("h2","scene header declarations:","Scene|Szene|.uftritt"),
       # actionButton("submit.h","apply act|scene definitions"),
       
-      helpText('the corpus is fetched from the DOI source preconfigured...'),
+      helpText('the corpus is fetched once from the DOI source preconfigured...'),
      # helpText('we have found the following acts declarations:'),
       #verbatimTextOutput("acts"),
      # actionButton("sumbit.keep.act","use act definitions"),
