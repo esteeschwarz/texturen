@@ -34,7 +34,7 @@ target<-is.system
 countries<-read.csv("country_data.csv")
 q<-"https://dataverse.no/api/access/datafile/:persistentId?persistentId=doi:10.18710/VM2K4O/GEVNMF"
 #countries<-read.csv("country_data.csv")
-src.zip<-paste0(Sys.getenv("HKW_TOP"),"/Users/guhl/boxHKW/UNIhkw/21S/DH/local/AVL/2025/textur/dataverse_files/gpt-stories.zip")
+src.zip<-paste0(Sys.getenv("HKW_TOP"),"/AVL/2025/textur/dataverse_files/gpt-stories.zip")
 src.doi<-"https://dataverse.no/api/access/datafile/:persistentId?persistentId=doi:10.18710/VM2K4O/GEVNMF"
 sbctempdir<-tempdir()
 local<-F
