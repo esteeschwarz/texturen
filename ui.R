@@ -1,12 +1,13 @@
 library(shiny)
-library(diffr)
+#library(diffr)
 library(shinyWidgets)
 library(shinycssloaders)
 library(shinyjs)
+library(DT)
 ### this script is templated from another (https://github.com/esteeschwarz/dracorTEI) i.e. still messy with deprecated stuff.
-version<-"SNC:16255.v0.0.3"
-status<-"stuck"
-error<-"cannot mtfrm"
+version<-"SNC:16255.v0.0.5"
+status<-"wks."
+#error<-"cannot mtfrm"
 countries<-read.csv("country_data.csv")
 src.zip<-paste0(Sys.getenv("HKW_TOP"),"/Users/guhl/boxHKW/UNIhkw/21S/DH/local/AVL/2025/textur/dataverse_files/gpt-stories.zip")
 src.doi<-"https://dataverse.no/api/access/datafile/:persistentId?persistentId=doi:10.18710/VM2K4O/GEVNMF"
@@ -200,15 +201,20 @@ fluidPage(
               
       withSpinner(uiOutput("processed"))
       ),
-      tabPanel("downloads",
-              h4("available pdf downloads"),
-              actionButton("refresh", "refresh pdfs", class = "btn-primary"),
-              htmlOutput("pdfdiv")
+      # tabPanel("downloads",
+      #         h4("available pdf downloads"),
+      #         actionButton("refresh", "refresh pdfs", class = "btn-primary"),
+      #         htmlOutput("pdfdiv")
 
 
               
     
-      ),
+      # ),
+      tabPanel("downloads-table",
+        # tableOutput("pdfs")
+          DTOutput("pdfs")
+
+),
     #   tabPanel("render",h4("rendered xml view"),
     #            uiOutput("xmlrendered")
     #   ),

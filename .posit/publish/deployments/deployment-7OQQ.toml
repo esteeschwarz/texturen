@@ -10,8 +10,8 @@ id = "019ee5c7-bba3-8b94-68df-18a35cf7d20c"
 dashboard_url = "https://connect.posit.cloud/esteeschwarz/content/019ee5c7-bba3-8b94-68df-18a35cf7d20c"
 direct_url = "https://019ee5c7-bba3-8b94-68df-18a35cf7d20c.share.connect.posit.cloud"
 logs_url = "https://connect.posit.cloud/esteeschwarz/content/019ee5c7-bba3-8b94-68df-18a35cf7d20c/history"
-deployed_at = "2026-06-20T18:05:34.895Z"
-bundle_id = "019ee635-76fb-5b80-a8bf-b11efc0f2524"
+deployed_at = "2026-06-21T07:02:10.304Z"
+bundle_id = "019ee8fc-666a-9957-6ffd-b8f1acb9b904"
 files = [
     ".gitignore",
     ".posit/publish/deployments/deployment-7OQQ.toml",
@@ -24,9 +24,22 @@ files = [
     "ui.R",
     "www/gtpstories_Andorra-1",
     "www/gtpstories_Andorra-1.pdf",
+    "www/gtpstories_Andorra-11",
+    "www/gtpstories_Andorra-11.pdf",
+    "www/gtpstories_Andorra-14",
+    "www/gtpstories_Andorra-14.pdf",
+    "www/gtpstories_Andorra-2.pdf",
+    "www/gtpstories_Andorra-3.pdf",
     "www/gtpstories_Armenia-1",
     "www/gtpstories_Armenia-1.pdf",
+    "www/gtpstories_France-1",
+    "www/gtpstories_France-1.pdf",
     "www/gtpstories_France-14.pdf",
+    "www/gtpstories_Germany-13",
+    "www/gtpstories_Germany-13.pdf",
+    "www/gtpstories_Germany-3.pdf",
+    "www/gtpstories_Switzerland-1",
+    "www/gtpstories_Switzerland-1.pdf",
 ]
 
 [connect_cloud]
@@ -61,6 +74,44 @@ version = "4.5.2"
 [[renv.r.repositories]]
 name = "CRAN"
 url = "https://cloud.r-project.org"
+
+[renv.packages.DT]
+package = "DT"
+version = "0.34.0"
+source = "Repository"
+type = "Package"
+title = "A Wrapper of the JavaScript Library 'DataTables'"
+"authors@r" = "c( person(\"Yihui\", \"Xie\", role = \"aut\"), person(\"Joe\", \"Cheng\", , \"joe@posit.co\", role = \"aut\"), person(\"Xianying\", \"Tan\", role = \"aut\"), person(\"Garrick\", \"Aden-Buie\", , \"garrick@posit.co\", role = c(\"aut\", \"cre\"), comment = c(ORCID = \"0000-0002-7111-0077\")), person(\"JJ\", \"Allaire\", role = \"ctb\"), person(\"Maximilian\", \"Girlich\", role = \"ctb\"), person(\"Greg\", \"Freedman Ellis\", role = \"ctb\"), person(\"Johannes\", \"Rauh\", role = \"ctb\"), person(\"SpryMedia Limited\", role = c(\"ctb\", \"cph\"), comment = \"DataTables in htmlwidgets/lib\"), person(\"Brian\", \"Reavis\", role = c(\"ctb\", \"cph\"), comment = \"selectize.js in htmlwidgets/lib\"), person(\"Leon\", \"Gersen\", role = c(\"ctb\", \"cph\"), comment = \"noUiSlider in htmlwidgets/lib\"), person(\"Bartek\", \"Szopka\", role = c(\"ctb\", \"cph\"), comment = \"jquery.highlight.js in htmlwidgets/lib\"), person(\"Alex\", \"Pickering\", role = \"ctb\"), person(\"William\", \"Holmes\", role = \"ctb\"), person(\"Mikko\", \"Marttila\", role = \"ctb\"), person(\"Andres\", \"Quintero\", role = \"ctb\"), person(\"Stéphane\", \"Laurent\", role = \"ctb\"), person(\"Posit Software, PBC\", role = c(\"cph\", \"fnd\")) )"
+description = "Data objects in R can be rendered as HTML tables using the JavaScript library 'DataTables' (typically via R Markdown or Shiny). The 'DataTables' library has been included in this R package. The package name 'DT' is an abbreviation of 'DataTables'."
+license = "MIT + file LICENSE"
+url = "https://github.com/rstudio/DT"
+bug_reports = "https://github.com/rstudio/DT/issues"
+imports = [
+    "crosstalk",
+    "htmltools (>= 0.3.6)",
+    "htmlwidgets (>= 1.3)",
+    "jquerylib",
+    "jsonlite (>= 0.9.16)",
+    "magrittr",
+    "promises",
+]
+suggests = [
+    "bslib",
+    "future",
+    "httpuv",
+    "knitr (>= 1.8)",
+    "rmarkdown",
+    "shiny (>= 1.6)",
+    "testit",
+    "tibble",
+]
+vignette_builder = "knitr"
+encoding = "UTF-8"
+roxygen_note = "7.3.2"
+needs_compilation = "no"
+author = "Yihui Xie [aut], Joe Cheng [aut], Xianying Tan [aut], Garrick Aden-Buie [aut, cre] (ORCID: <https://orcid.org/0000-0002-7111-0077>), JJ Allaire [ctb], Maximilian Girlich [ctb], Greg Freedman Ellis [ctb], Johannes Rauh [ctb], SpryMedia Limited [ctb, cph] (DataTables in htmlwidgets/lib), Brian Reavis [ctb, cph] (selectize.js in htmlwidgets/lib), Leon Gersen [ctb, cph] (noUiSlider in htmlwidgets/lib), Bartek Szopka [ctb, cph] (jquery.highlight.js in htmlwidgets/lib), Alex Pickering [ctb], William Holmes [ctb], Mikko Marttila [ctb], Andres Quintero [ctb], Stéphane Laurent [ctb], Posit Software, PBC [cph, fnd]"
+maintainer = "Garrick Aden-Buie <garrick@posit.co>"
+repository = "CRAN"
 
 [renv.packages.KernSmooth]
 package = "KernSmooth"
@@ -530,28 +581,36 @@ author = "Jeroen Ooms [aut, cre] (ORCID: <https://orcid.org/0000-0002-4035-0289>
 maintainer = "Jeroen Ooms <jeroenooms@gmail.com>"
 repository = "CRAN"
 
-[renv.packages.diffr]
-package = "diffr"
-version = "0.3.0"
+[renv.packages.crosstalk]
+package = "crosstalk"
+version = "1.2.2"
 source = "Repository"
-title = "Display Differences Between Two Files using Codediff Library"
-"authors@r" = "person(\"John\", \"Muschelli\", email = \"muschellij2@gmail.com\", role = c(\"aut\", \"cre\"))"
-description = "An R interface to the 'codediff' JavaScript library (a copy of which is included in the package, see <https://github.com/danvk/codediff.js> for information). Allows for visualization of the difference between 2 files, usually text files or R scripts, in a browser."
-depends = [
-    "R (>= 3.0)",
-]
+type = "Package"
+title = "Inter-Widget Interactivity for HTML Widgets"
+"authors@r" = "c( person(\"Joe\", \"Cheng\", , \"joe@posit.co\", role = \"aut\"), person(\"Carson\", \"Sievert\", , \"carson@posit.co\", role = c(\"aut\", \"cre\"), comment = c(ORCID = \"0000-0002-4958-2844\")), person(\"Posit Software, PBC\", role = c(\"cph\", \"fnd\")), person(, \"jQuery Foundation\", role = \"cph\", comment = \"jQuery library and jQuery UI library\"), person(, \"jQuery contributors\", role = c(\"ctb\", \"cph\"), comment = \"jQuery library; authors listed in inst/www/shared/jquery-AUTHORS.txt\"), person(\"Mark\", \"Otto\", role = \"ctb\", comment = \"Bootstrap library\"), person(\"Jacob\", \"Thornton\", role = \"ctb\", comment = \"Bootstrap library\"), person(, \"Bootstrap contributors\", role = \"ctb\", comment = \"Bootstrap library\"), person(, \"Twitter, Inc\", role = \"cph\", comment = \"Bootstrap library\"), person(\"Brian\", \"Reavis\", role = c(\"ctb\", \"cph\"), comment = \"selectize.js library\"), person(\"Kristopher Michael\", \"Kowal\", role = c(\"ctb\", \"cph\"), comment = \"es5-shim library\"), person(, \"es5-shim contributors\", role = c(\"ctb\", \"cph\"), comment = \"es5-shim library\"), person(\"Denis\", \"Ineshin\", role = c(\"ctb\", \"cph\"), comment = \"ion.rangeSlider library\"), person(\"Sami\", \"Samhuri\", role = c(\"ctb\", \"cph\"), comment = \"Javascript strftime library\") )"
+description = "Provides building blocks for allowing HTML widgets to communicate with each other, with Shiny or without (i.e. static .html files). Currently supports linked brushing and filtering."
+license = "MIT + file LICENSE"
+url = "https://rstudio.github.io/crosstalk/, https://github.com/rstudio/crosstalk"
+bug_reports = "https://github.com/rstudio/crosstalk/issues"
 imports = [
-    "htmlwidgets",
+    "htmltools (>= 0.3.6)",
+    "jsonlite",
+    "lazyeval",
+    "R6",
 ]
-license = "GPL-2"
-roxygen_note = "7.3.2"
 suggests = [
+    "bslib",
+    "ggplot2",
+    "sass",
     "shiny",
+    "testthat (>= 2.1.0)",
 ]
-bug_reports = "https://github.com/muschellij2/diffr/issues"
+"config/needs/website" = "jcheng5/d3scatter, DT, leaflet, rmarkdown"
+encoding = "UTF-8"
+roxygen_note = "7.3.2"
 needs_compilation = "no"
-author = "John Muschelli [aut, cre]"
-maintainer = "John Muschelli <muschellij2@gmail.com>"
+author = "Joe Cheng [aut], Carson Sievert [aut, cre] (ORCID: <https://orcid.org/0000-0002-4958-2844>), Posit Software, PBC [cph, fnd], jQuery Foundation [cph] (jQuery library and jQuery UI library), jQuery contributors [ctb, cph] (jQuery library; authors listed in inst/www/shared/jquery-AUTHORS.txt), Mark Otto [ctb] (Bootstrap library), Jacob Thornton [ctb] (Bootstrap library), Bootstrap contributors [ctb] (Bootstrap library), Twitter, Inc [cph] (Bootstrap library), Brian Reavis [ctb, cph] (selectize.js library), Kristopher Michael Kowal [ctb, cph] (es5-shim library), es5-shim contributors [ctb, cph] (es5-shim library), Denis Ineshin [ctb, cph] (ion.rangeSlider library), Sami Samhuri [ctb, cph] (Javascript strftime library)"
+maintainer = "Carson Sievert <carson@posit.co>"
 repository = "CRAN"
 
 [renv.packages.digest]
@@ -1122,6 +1181,34 @@ bug_reports = "https://github.com/deepayan/lattice/issues"
 needs_compilation = "yes"
 author = "Deepayan Sarkar [aut, cre] (<https://orcid.org/0000-0003-4107-1553>), Felix Andrews [ctb], Kevin Wright [ctb] (documentation), Neil Klepeis [ctb], Johan Larsson [ctb] (miscellaneous improvements), Zhijian (Jason) Wen [cph] (filled contour code), Paul Murrell [ctb], Stefan Eng [ctb] (violin plot improvements), Achim Zeileis [ctb] (modern colors), Alexandre Courtiol [ctb] (generics for larrows, lpolygon, lrect and lsegments)"
 maintainer = "Deepayan Sarkar <deepayan.sarkar@r-project.org>"
+repository = "CRAN"
+
+[renv.packages.lazyeval]
+package = "lazyeval"
+version = "0.2.3"
+source = "Repository"
+title = "Lazy (Non-Standard) Evaluation"
+description = "An alternative approach to non-standard evaluation using formulas. Provides a full implementation of LISP style 'quasiquotation', making it easier to generate code with other code."
+"authors@r" = "c( person(\"Hadley\", \"Wickham\", ,\"hadley@rstudio.com\", c(\"aut\", \"cre\")), person(\"RStudio\", role = \"cph\") )"
+license = "GPL-3"
+depends = [
+    "R (>= 3.1.0)",
+]
+imports = [
+    "rlang",
+]
+suggests = [
+    "knitr",
+    "rmarkdown (>= 0.2.65)",
+    "testthat",
+    "covr",
+]
+vignette_builder = "knitr"
+roxygen_note = "7.3.3"
+"config/build/compilation-database" = "true"
+needs_compilation = "yes"
+author = "Hadley Wickham [aut, cre], RStudio [cph]"
+maintainer = "Hadley Wickham <hadley@rstudio.com>"
 repository = "CRAN"
 
 [renv.packages.lifecycle]
