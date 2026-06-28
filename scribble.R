@@ -1,3 +1,13 @@
-a<-"https://019ee5c7-bba3-8b94-68df-18a35cf7d20c.share.connect.posit.cloud"
-b<-"https://019ee5c7-bba3-8b94-68df-18a35cf7d20c.share.connect.posit.cloud"
-c<-"https://019ee5c7-bba3-8b94-68df-18a35cf7d20c.share.connect.posit.cloud"
+load("texturen/cdf.RData")
+
+co<-"Andorra"
+id<-"1"
+subset<-cdf[cdf$Country_Name==co,]
+    story<-subset$Story[id]
+    print(dim(subset))
+    print(colnames(subset))
+    cat("--- story:",co,id,"\n\n",substr(story,1,100),"\n")
+
+library(markdown)
+?markdown
+?rmarkdown::render
