@@ -25,7 +25,7 @@ date: '`r format(Sys.time())`'
 #       "[<< the anarkkiv lankalevikki worksheet collection >>](https://stschwarz.userpage.fu-berlin.de/links/?title=paperfoot&ref=paper-temp)"
 #     plain: | 
 #       "<https://esteeschwarz.github.io/DC-LX/essais/papers/010/>"
-bibliography: ../rettberg.bib
+bibliography: rettberg.bib
 nocite: '@*'
 format:
   html:
@@ -33,7 +33,7 @@ format:
     # css: poster.css
     theme: Cosmo
     toc: false
-    self-contained: false
+    self-contained: true
   # format:
   pdf:
       filters:
