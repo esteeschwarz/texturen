@@ -143,7 +143,7 @@ print(filestrn)
     print(csf)
 
     m<-grep("stories",basename(csf))
-    print(csf[m])
+   # print(csf[m])
     cdf<-read.csv(csf[m])
    # stories<-cdf$Story
 }
@@ -380,38 +380,48 @@ div<-c("processing title, open <processed> when finished")
     print(colnames(subset))
     print(head(subset,1))
     cat("--- story:",co,id,"\n\n",substr(story,1,100),"\n")
-    print(substr(story,1,100))
+    #print(substr(story,1,100))
     #  output$processed <- renderUI({
     #   div(
     #     style = "height: 70vh; overflow-y: auto; background: #f8f8f8; padding: 10px;",
     #     p(style = "font-family: monospace;",story))
     # })
-    mdh<-readLines("mdy.md")
+
+#    mdst<-readLines("mdy.md")
+    title<-gsub("[*]","",story[1])
+    storyhead<-c("---",
+    paste0('title: "',title,'"'),
+      "---")
+    story.out<-c(storyhead,story)
+    story.out<-story
     mdq<-readLines("visite/_story-template.qmd")
     ######################
    mdt<-tempfile("x.md")
     # mdt<-tempfile("x.qmd")
-    writeLines(story,mdt)
+    writeLines(story.out,mdt)
+    writeLines(story.out,"www/_story.md")
     mds<-readLines(mdt)
     qmd<-".qmd"
-    mdns<-paste0("gtpstories_",co,"-",id,qmd)
+    mdns<-paste0("gtpstories_",co,"-",id)
     print(mdns)
     ### qmd
     mdh<-mdq
     ###########################
-    mdh<-gsub("#pdf#",mdns,mdh)
+    mdh<-gsub("#mdns#",mdns,mdh)
     mdh<-gsub("#countrycode#",paste0(co," - ",id),mdh)
-
+ 
     md<-c(mdh,story)
-    mdw<-paste0("www/",mdns)
+    md<-mdh
+    mdw<-paste0("www/",mdns,".qmd")
     writeLines(md,mdw)
     ######################
     #rmarkdown::render(mdw)
     ###
     #library(quarto)
-   # ??quarto::render 
+   # ??quarto::render  
       
     quarto::quarto_render(mdw)
+    htmns<-paste0(mdns,".html")
     rv$mdns<-mdns
     mdp<-paste0(md,collapse="\n")
     div<-c("processed title, open <processed> to view text")
@@ -423,10 +433,10 @@ div<-c("processing title, open <processed> when finished")
       )
     })
     output$processed <- renderUI({
-    
+     
     #HTML(sprintf('<div><a href="%s" target="_blank">download text as pdf</a></div>',mdns))
     html <- markdown::markdownToHTML(mdp, fragment.only = TRUE)
-    HTML(html)
+    #HTML(htmns)
     #  div(
     #     style = "height: 70vh; overflow-y: auto; background: #f8f8f8; padding: 10px;",
     #     p(style = "font-family: monospace;",story))
