@@ -1,0 +1,58 @@
+\usepackage{eso-pic}
+\usepackage{tikz}
+\usepackage{pgfpages}
+\pgfpagesuselayout{2 on 1}[a4paper, landscape, border shrink=0mm]
+\newlength{\cropoff} \setlength{\cropoff}{6mm}
+\newlength{\croparm} \setlength{\croparm}{4mm}
+
+\newcommand{\CropMarksAndMeta}{%
+\begin{tikzpicture}[remember picture, overlay,
+    every path/.style={gray!50, line width=0.4pt}]
+  % top-left cross
+  \draw ([xshift=\cropoff,  yshift=-\cropoff]current page.north west)
+        ++(-\croparm, 0) -- ++({2\croparm}, 0);
+  \draw ([xshift=\cropoff,  yshift=-\cropoff]current page.north west)
+        ++(0, \croparm)  -- ++(0, {-2\croparm});
+  % top-right cross
+  \draw ([xshift=-\cropoff, yshift=-\cropoff]current page.north east)
+        ++(-\croparm, 0) -- ++({2\croparm}, 0);
+  \draw ([xshift=-\cropoff, yshift=-\cropoff]current page.north east)
+        ++(0, \croparm)  -- ++(0, {-2\croparm});
+  % bottom-left cross
+  \draw ([xshift=\cropoff,  yshift=\cropoff]current page.south west)
+        ++(-\croparm, 0) -- ++({2\croparm}, 0);
+  \draw ([xshift=\cropoff,  yshift=\cropoff]current page.south west)
+        ++(0, \croparm)  -- ++(0, {-2\croparm});
+  % bottom-right cross
+  \draw ([xshift=-\cropoff, yshift=\cropoff]current page.south east)
+        ++(-\croparm, 0) -- ++({2\croparm}, 0);
+  \draw ([xshift=-\cropoff, yshift=\cropoff]current page.south east)
+        ++(0, \croparm)  -- ++(0, {-2\croparm});
+  % meta text
+  \node[gray!60, font=\tiny\ttfamily, anchor=north]
+    at ([yshift={\cropoff-1.5mm}]current page.south)
+    {\jobname.tex || 
+    \ifdefined\docpaperlink
+  \\{\docpaperlink}%
+  \fi
+   || 
+  \docdate};
+  \node[gray!60, font=\tiny\ttfamily, anchor=south west]
+    at ([xshift={\cropoff-2mm}, yshift={-\cropoff+1.5mm}]current page.north west)
+    {\docauthor \ifdefined\doctitle
+  \\:: {\doctitle}%
+\fi
+\ifdefined\docsubtitle
+  \\:: {\docsubtitle}%
+\fi};
+
+  \node[gray!60, font=\tiny\ttfamily, anchor=south east]
+    at ([xshift={\cropoff-2mm}, yshift={-\cropoff+1.5mm}]current page.north east)
+    {    \ifdefined\cfootli
+  \\[2pt]{\normalsize\headerfont\cfootli}%
+\fi
+};
+
+\end{tikzpicture}%
+}
+\AddToShipoutPictureBG{\CropMarksAndMeta}

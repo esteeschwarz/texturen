@@ -1,0 +1,13 @@
+project:
+ type: website 
+ output-dir: ../output/pages/test/
+
+#    
+format:
+  # gfm: default
+  html:
+    theme: 
+      - cosmo
+      - brand
+render:
+    - samling.qmd

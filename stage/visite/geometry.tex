@@ -1,0 +1,20 @@
+% quarto-page-geometry.tex
+% Include this in the QUARTO SOURCE document (the one with your actual
+% content), via header-includes, so that each logical page comes out
+% at exactly 200mm x 240mm. The imposition step (impose.tex) relies on
+% this exact size to avoid any rescaling.
+%
+% Usage in your .qmd YAML:
+%
+% format:
+%   pdf:
+%     documentclass: scrartcl
+%     include-in-header: quarto-page-geometry.tex
+%
+\usepackage{geometry}
+\geometry{
+  paperwidth=100mm,
+  paperheight=120mm,
+  margin=15mm,        % adjust to taste - this is content margin, not rim
+  bottom=20mm
+}

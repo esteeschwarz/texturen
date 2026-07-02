@@ -1,0 +1,122 @@
+% impose.tex
+% ---------------------------------------------------------------
+% Imposition template: 2 logical pages (200x240mm each) per
+% landscape sheet, with Schnittmarken (crop marks) at the trim box
+% and corner registration crosses (+ docname/date) in the rim,
+% outside the cut area, repeated on every sheet.
+%
+% USAGE
+%   1. Render your Quarto doc to PDF as usual (using
+%      quarto-page-geometry.tex as include-in-header so each page
+%      is exactly 200x240mm).
+%   2. Edit \SourcePDF, \DocName below.
+%   3. Compile this file with pdflatex or xelatex:
+%        pdflatex impose.tex
+%
+% LAYOUT MATH (all mm)
+%   trim box       : 200 x 240   (the actual finished page)
+%   gutter         : 10  (space between the two pages, for center marks)
+%   rim (margin)   : 20  on all four sides (room for crosses + labels)
+%   sheet width    : 20 + 200 + 10 + 200 + 20 = 450
+%   sheet height   : 20 + 240 + 20            = 280
+% ---------------------------------------------------------------
+
+\documentclass[landscape]{article}
+
+% ---- EDIT THESE -------------------------------------------------
+\def\SourcePDF{jonah.pdf} % the Quarto-rendered PDF
+\def\DocName{visite-test}                % shown on every sheet
+\def\DocDate{\today}                       % shown on every sheet
+% ------------------------------------------------------------------
+
+% \usepackage[paperwidth=297mm,paperheight=210mm,margin=20mm]{geometry}
+\usepackage[paperwidth=297mm,paperheight=210mm]{geometry}
+\usepackage{pdfpages}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+\usepackage{xcolor}
+
+% crop mark dimensions (mm)
+\def\CMlen{6}
+\def\CMgap{2}
+\def\CMwidth{0.25pt}
+
+% --------------------------------------------------------------
+% \CropCorner{x}{y}{hdir}{vdir}
+%   draws one L-shaped crop mark at trim-box corner (x,y).
+%   hdir/vdir = +1 or -1: direction the strokes point, away from
+%   the trim box (into gutter/rim), never crossing the printed area.
+% --------------------------------------------------------------
+\newcommand{\CropCorner}[4]{%
+  \pgfmathsetmacro{\hA}{#3*\CMgap}%
+  \pgfmathsetmacro{\hB}{#3*(\CMgap+\CMlen)}%
+  \pgfmathsetmacro{\vA}{#4*\CMgap}%
+  \pgfmathsetmacro{\vB}{#4*(\CMgap+\CMlen)}%
+  \draw[black,line width=\CMwidth] ({#1+\hA},{#2}) -- ({#1+\hB},{#2});
+  \draw[black,line width=\CMwidth] ({#1},{#2+\vA}) -- ({#1},{#2+\vB});
+}
+
+% --------------------------------------------------------------
+% \RegCross{x}{y}: small printer's registration cross, used at the
+% outer corners of the sheet together with the docname/date label.
+% --------------------------------------------------------------
+\newcommand{\RegCross}[2]{%
+  \draw[black,line width=0.3pt] (#1-2,#2) -- (#1+2,#2);
+  \draw[black,line width=0.3pt] (#1,#2-2) -- (#1,#2+2);
+}
+
+% --------------------------------------------------------------
+% Executed once PER OUTPUT SHEET by pdfpages' pagecommand, so it
+% automatically repeats on every sheet without any loop.
+% --------------------------------------------------------------
+\newcommand{\SheetMarks}{%
+  \begin{tikzpicture}[remember picture,overlay,x=1mm,y=1mm,
+      shift={(current page.south west)}]
+
+    % ---- crop marks: page 1 (left), trim box x:[20,220] y:[20,260]
+    \CropCorner{20}{20}{-1}{-1}
+    \CropCorner{220}{20}{1}{-1}
+    \CropCorner{20}{260}{-1}{1}
+    \CropCorner{220}{260}{1}{1}
+
+    % ---- crop marks: page 2 (right), trim box x:[230,430] y:[20,260]
+    \CropCorner{230}{20}{-1}{-1}
+    \CropCorner{430}{20}{1}{-1}
+    \CropCorner{230}{260}{-1}{1}
+    \CropCorner{430}{260}{1}{1}
+
+    % ---- corner registration crosses + docname/date, in the rim,
+    %      outside the 20mm trim/cut margin, repeated each sheet
+    \RegCross{8}{272}
+    \node[anchor=south west,font=\tiny] at (12,270) {\DocName\ -- \DocDate};
+
+    \RegCross{442}{272}
+    \node[anchor=south east,font=\tiny] at (438,270) {\DocName\ -- \DocDate};
+
+    \RegCross{8}{8}
+    \node[anchor=north west,font=\tiny] at (12,10) {\DocName\ -- \DocDate};
+
+    \RegCross{442}{8}
+    \node[anchor=north east,font=\tiny] at (438,10) {\DocName\ -- \DocDate};
+
+  \end{tikzpicture}%
+}
+
+\begin{document}
+\pagestyle{empty}
+
+% nup=2x1 places 2 source pages left-to-right per output sheet.
+% Printable area (sheet minus 20mm geometry margin) is 410x240mm;
+% with a 10mm horizontal delta each cell is exactly 200x240mm, so
+% the source pages (already 200x240mm) drop in at scale 1 - no
+% rescaling - and \SheetMarks lines up exactly with the cells.
+\includepdf[
+  pages=-,
+  nup=2x1,
+  delta=10mm 0mm,
+  noautoscale=true,
+  frame=false,
+  pagecommand={\SheetMarks}
+]{\SourcePDF}
+
+\end{document}

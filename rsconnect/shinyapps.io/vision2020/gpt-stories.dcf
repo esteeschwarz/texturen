@@ -1,0 +1,13 @@
+name: gpt-stories
+title: gpt-stories
+username: vision2020
+account: vision2020
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 17576526
+bundleId: 12212693
+url: https://vision2020.shinyapps.io/gpt-stories/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: .posit/publish/deployments/deployment-7OQQ.toml|.posit/publish/texturen-gptstories-OMUV.toml
