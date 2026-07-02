@@ -387,18 +387,31 @@ div<-c("processing title, open <processed> when finished")
     #     p(style = "font-family: monospace;",story))
     # })
     mdh<-readLines("mdy.md")
-    mdt<-tempfile("x.md")
+    mdq<-readLines("visite/_story-template.qmd")
+    ######################
+   mdt<-tempfile("x.md")
+    # mdt<-tempfile("x.qmd")
     writeLines(story,mdt)
     mds<-readLines(mdt)
-    mdns<-paste0("gtpstories_",co,"-",id)
+    qmd<-".qmd"
+    mdns<-paste0("gtpstories_",co,"-",id,qmd)
     print(mdns)
+    ### qmd
+    mdh<-mdq
+    ###########################
     mdh<-gsub("#pdf#",mdns,mdh)
     mdh<-gsub("#countrycode#",paste0(co," - ",id),mdh)
 
     md<-c(mdh,story)
     mdw<-paste0("www/",mdns)
     writeLines(md,mdw)
-    rmarkdown::render(mdw)
+    ######################
+    #rmarkdown::render(mdw)
+    ###
+    #library(quarto)
+   # ??quarto::render 
+      
+    quarto::quarto_render(mdw)
     rv$mdns<-mdns
     mdp<-paste0(md,collapse="\n")
     div<-c("processed title, open <processed> to view text")

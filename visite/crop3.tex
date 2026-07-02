@@ -1,0 +1,65 @@
+\usepackage{pgfpages}
+\pgfpagesuselayout{2 on 1}[a4paper, landscape, border shrink=0mm]
+
+\newlength{\sheetW} \setlength{\sheetW}{297mm}
+\newlength{\sheetH} \setlength{\sheetH}{210mm}
+\newlength{\cropoff} \setlength{\cropoff}{6mm}
+\newlength{\croparm} \setlength{\croparm}{4mm}
+
+\AddToHook{shipout/background}{%
+  \put(0,-\sheetH){%
+    \begin{tikzpicture}[
+        every path/.style={gray!50, line width=0.4pt}]
+
+      % ── outer corners ────────────────────────────────────
+      % top-left
+      \draw (\cropoff, \sheetH-\cropoff)
+            ++(-\croparm,0) -- ++({2\croparm},0);
+      \draw (\cropoff, \sheetH-\cropoff)
+            ++(0,-\croparm) -- ++(0,{2\croparm});
+      % top-right
+      \draw (\sheetW-\cropoff, \sheetH-\cropoff)
+            ++(-\croparm,0) -- ++({2\croparm},0);
+      \draw (\sheetW-\cropoff, \sheetH-\cropoff)
+            ++(0,-\croparm) -- ++(0,{2\croparm});
+      % bottom-left
+      \draw (\cropoff, \cropoff)
+            ++(-\croparm,0) -- ++({2\croparm},0);
+      \draw (\cropoff, \cropoff)
+            ++(0,-\croparm) -- ++(0,{2\croparm});
+      % bottom-right
+      \draw (\sheetW-\cropoff, \cropoff)
+            ++(-\croparm,0) -- ++({2\croparm},0);
+      \draw (\sheetW-\cropoff, \cropoff)
+            ++(0,-\croparm) -- ++(0,{2\croparm});
+
+      % ── spine / gutter centre ────────────────────────────
+      \draw (0.5\sheetW, \sheetH-\cropoff)
+            ++(-\croparm,0) -- ++({2\croparm},0);
+      \draw (0.5\sheetW, \sheetH-\cropoff)
+            ++(0,-\croparm) -- ++(0,{2\croparm});
+      \draw (0.5\sheetW, \cropoff)
+            ++(-\croparm,0) -- ++({2\croparm},0);
+      \draw (0.5\sheetW, \cropoff)
+            ++(0,-\croparm) -- ++(0,{2\croparm});
+
+      % ── meta text ────────────────────────────────────────
+      \node[gray!60, font=\tiny\ttfamily, anchor=north]
+        at (0.5\sheetW, \cropoff-1.5mm)
+        {\jobname.tex || 
+    \ifdefined\docpaperlink
+  \\{\docpaperlink}%
+  \fi
+   || 
+  \docdate
+  };
+      \node[gray!60, font=\tiny\ttfamily, anchor=north east]
+        at (\sheetW-\cropoff+2mm, \cropoff-1.5mm)
+        {\docauthor};
+      \node[gray!60, font=\tiny\ttfamily, anchor=south]
+        at (0.5\sheetW, \sheetH-\cropoff+1.5mm)
+        {cut here};
+
+    \end{tikzpicture}%
+  }%
+}
